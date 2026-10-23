@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BarChart3, Code2, Database, FlaskConical, Info, Menu, Moon, Sun, X } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { NavLink, useLocation } from "react-router-dom";
@@ -18,8 +18,10 @@ export function AppShell({ children }) {
   const { pathname } = useLocation();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 30 });
+  useEffect(() => { window.scrollTo?.({ top: 0, behavior: "instant" }); }, [pathname]);
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <header className="topbar">
         <NavLink to="/" className="brand" onClick={() => setOpen(false)} aria-label="Regivance home">
@@ -28,7 +30,7 @@ export function AppShell({ children }) {
         <button className="menu-button" onClick={() => setOpen((value) => !value)} aria-label="Toggle navigation" aria-expanded={open}>
           {open ? <X /> : <Menu />}
         </button>
-        <nav className="desktop-nav">{links.map(([to, label]) => <NavItem key={to} to={to} label={label} />)}</nav>
+        <nav className="desktop-nav" aria-label="Main navigation">{links.map(([to, label]) => <NavItem key={to} to={to} label={label} />)}</nav>
         <motion.button whileTap={{ scale: .93 }} className="theme-toggle" onClick={toggleTheme} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}>
           {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}<span>{theme === "light" ? "Dark" : "Light"}</span>
         </motion.button>
@@ -36,12 +38,12 @@ export function AppShell({ children }) {
       </header>
       <AnimatePresence>
         {open && (
-          <motion.nav className="mobile-nav" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+          <motion.nav aria-label="Mobile navigation" onKeyDown={event => { if (event.key === "Escape") setOpen(false); }} className="mobile-nav" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
             {links.map(([to, label, Icon]) => <NavLink key={to} to={to} onClick={() => setOpen(false)}><Icon size={17} />{label}</NavLink>)}
           </motion.nav>
         )}
       </AnimatePresence>
-      <main><motion.div key={pathname} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .3 }}>{children}</motion.div></main>
+      <main id="main-content" tabIndex={-1}><motion.div key={pathname} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .3 }}>{children}</motion.div></main>
       <footer><span>Regivance · quantitative research system</span><span>Research only — not investment advice</span></footer>
     </div>
   );

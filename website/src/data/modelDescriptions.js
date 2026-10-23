@@ -1,0 +1,21 @@
+// Explanatory metadata only. Recorded scores remain in research.js.
+export const metricDescriptions = {
+  mae: "Mean absolute error: average absolute difference between forecast and realized volatility, in decimal return units.",
+  rmse: "Root mean squared error: square root of average squared volatility error; larger misses receive more weight.",
+  qlike: "QLIKE: average variance-ratio loss v/v̂ − log(v/v̂) − 1, where v and v̂ are squared actual and forecast volatility. Sensitive to underprediction.",
+};
+
+const neural = "Learns sequential patterns from 21-observation windows. More flexible, but sensitive to training choices and distribution changes; complexity did not ensure better development scores.";
+export const modelDescriptions = {
+  "GJR-GARCH Student-t": { purpose: "Model asymmetric volatility with heavy-tailed shocks.", inputs: "Historical portfolio returns through the origin.", method: "GJR-GARCH adds an asymmetric response to negative shocks; Student-t innovations allow heavier tails.", caveat: "Best pooled development MAE, RMSE and QLIKE in this comparison. The ranking does not isolate the contribution of each assumption or guarantee future superiority." },
+  "GARCH Student-t": { purpose: "Model persistent volatility with heavy-tailed shocks.", inputs: "Historical portfolio returns through the origin.", method: "Conditional variance recursion with Student-t innovations and training-estimated coefficients.", caveat: "Captures persistence and heavier tails, but lacks the GJR asymmetric shock term." },
+  "GARCH Normal": { purpose: "Provide a conventional conditional-volatility benchmark.", inputs: "Historical portfolio returns through the origin.", method: "GARCH variance recursion with Normal innovations.", caveat: "A strong interpretable benchmark; symmetric responses and Normal shocks can limit flexibility." },
+  "Regime switching": { purpose: "Adapt benchmark selection to market context.", inputs: "Portfolio returns and training-fitted risk-feature regime labels.", method: "Selects among baseline and GARCH candidates by regime using validation performance.", caveat: "Uses interpretable specialists; regime-specific validation samples can be limited. This is a regime-conditioned selector, not a hidden Markov model." },
+  "EWMA": { purpose: "Track recent changes in portfolio variance.", inputs: "Observed portfolio returns through the origin.", method: "Exponentially weighted squared returns give recent observations more influence.", caveat: "Simple and responsive; does not explicitly model industry context or asymmetric shocks." },
+  "Rolling": { purpose: "Provide a transparent recent-history baseline.", inputs: "Trailing portfolio returns.", method: "Forecast is the square root of horizon times trailing mean squared returns.", caveat: "Easy to inspect; equal weighting within the window can adapt slowly to abrupt changes." },
+  "LSTM": { purpose: "Learn a nonlinear sequence benchmark.", inputs: "21-observation sequences of scaled industry returns.", method: "Recurrent neural network without explicit risk features or regime indicators.", caveat: neural },
+  "Regime-aware LSTM": { purpose: "Test the incremental value of regime indicators.", inputs: "Scaled industry return sequences plus one-hot regime labels.", method: "LSTM augmented with training-fitted regime context.", caveat: neural },
+  "Risk-feature LSTM": { purpose: "Test explicit risk summaries alongside returns.", inputs: "Scaled industry return sequences plus volatility, correlation and dispersion.", method: "LSTM with additional training-scaled risk features.", caveat: neural },
+  "Risk + regime LSTM": { purpose: "Combine explicit risk features and regime context.", inputs: "Scaled industry returns, risk features and one-hot regimes over 21 observations.", method: "LSTM with both risk-feature and regime inputs.", caveat: neural },
+  "QLIKE risk + regime LSTM": { purpose: "Align neural training with variance-ratio loss.", inputs: "Scaled industry returns, risk features and one-hot regimes over 21 observations.", method: "Risk-and-regime LSTM trained with a QLIKE objective.", caveat: "The objective targets relative variance errors. Its pooled QLIKE improved over the other neural specifications here, but remained above the statistical benchmarks." },
+};

@@ -61,7 +61,7 @@ The current result is informative: Student-t GJR-GARCH achieves the lowest poole
 
 ## Current delivery status
 
-Verification baseline: **October 15, 2026**.
+Verification baseline: **October 24, 2026**.
 
 | Deliverable | Status |
 | --- | --- |
@@ -71,7 +71,7 @@ Verification baseline: **October 15, 2026**.
 | Diagnostics, robustness tables and development report | Generated |
 | React dashboard | Implemented; production build verified |
 | Local Python tests | 121 passing |
-| Local React tests | 3 passing |
+| Local React tests | 10 passing |
 | Python dependency consistency | Verified with `pip check` |
 | Automated CI configuration | Python tests on Windows and Linux; remote status is separate |
 | Prospective evaluation implementation | Implemented, registered and tested on synthetic data |
@@ -218,12 +218,12 @@ On Linux/macOS, use `npm` instead of `npm.cmd`. On Windows, `npm.cmd` avoids Pow
 
 ### Suggested demonstration sequence
 
-1. Open **Overview** to introduce the research question and development finding.
-2. Visit **Data & features** to explain the portfolio, target and three regime features.
-3. Use the regime explorer to explain lower, middle and higher volatility ranks.
-4. Visit **Results**, switch MAE/RMSE/QLIKE, filter model families and inspect individual models.
-5. Open **Methodology** to explain the chronological folds and embargo.
-6. Switch light/dark themes and show the report for deeper research evidence.
+1. Open **Overview** to introduce the research question, historical development result and six-stage research workflow.
+2. Visit **Data & features** to explain the portfolio, five-observation target, 21-observation lookback and three regime features.
+3. Use the regime explorer and illustrative walkthrough to distinguish movement magnitude from direction.
+4. Visit **Results**, switch MAE/RMSE/QLIKE, filter model families, inspect model details and compare the overall leader.
+5. Open **Methodology** to explain chronological folds, embargo gaps, leakage safeguards and research-selection bias.
+6. Visit **About** for contributions, limitations and prospective evaluation scope, then demonstrate both themes and responsive navigation.
 
 The dashboard includes curated scores, so this presentation path does not require downloading the source dataset or rerunning all experiments.
 
@@ -513,13 +513,15 @@ The manifest records source-data hashes, code/config fingerprints, Python/packag
 
 | Page | Purpose |
 | --- | --- |
-| Overview | Research question, development summary and delivery status |
-| Data & features | Portfolio construction, risk features and interactive regime explanations |
-| Results | MAE/RMSE/QLIKE switching, family filters, search and model details |
-| Methodology | Chronological research workflow and fold layout |
-| About | Project scope, next milestone and repository link |
+| Overview | Research question, historical development summary, six-stage workflow and delivery status |
+| Data & features | Portfolio construction, target timing, 21-observation context, risk features, regime explorer and illustrative walkthrough |
+| Results | Metric explanations, family filters, search, synchronized model details and overall-leader comparison |
+| Methodology | Chronological fold layout, nine leakage safeguards, selection-bias boundary and illustrative forecast scoring |
+| About | Contributions, limitations, future scope, prospective milestone and repository link |
 
-The interface includes a white/blue default theme, a dark/green alternative, a persisted theme switch, responsive navigation, lazy-loaded routes, animated page entrances, hover states and scroll progress. Motion settings respect reduced-motion preferences.
+The interface includes a white/blue default theme, a dark/green alternative, a persisted theme switch, responsive navigation, keyboard focus states, a skip link, lazy-loaded routes, animated page entrances, hover states and scroll progress. Charts and tables remain horizontally accessible on narrow screens, and motion settings respect reduced-motion preferences.
+
+All displayed scores remain reviewed static development results. The educational walkthrough uses fixed illustrative numbers, does not execute a model and does not claim to provide a live forecast.
 
 ### Updating displayed research results
 
@@ -556,7 +558,7 @@ npm.cmd test
 npm.cmd run build
 ```
 
-The three tests cover initial rendering, persisted theme switching, and combined model-filter/search/selection behavior. They do not constitute full cross-browser visual or end-to-end coverage. The results-view component test substitutes the chart component.
+The 10 tests cover initial rendering, persisted theme switching, combined filters, synchronized model selection, the independent comparison view, the illustrative walkthrough, route rendering and mobile navigation. They do not constitute full cross-browser visual or end-to-end coverage. Results-view component tests substitute the chart component.
 
 ### Continuous integration
 

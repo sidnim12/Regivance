@@ -4,6 +4,10 @@ React/Vite presentation layer for the Regivance research system. It reads curate
 
 The default appearance is white with blue accents. The navigation theme switch restores a saved light/dark preference. Results include metric switching, family filters, model search and individual model inspection. The feature page includes an animated regime explainer. Page entrances, hover effects and chart animations respect reduced-motion preferences.
 
+The overview presents the historical research workflow. Data & features and Methodology share a fixed, clearly labeled educational forecast walkthrough; it reveals illustrative future returns and calculates the root-sum-of-squares target and errors without executing a model. Methodology documents chronological folds, nine leakage safeguards and the separate risk of research-selection bias.
+
+Results preserve all 11 recorded specifications and scores in `src/data/research.js`. Explanations live separately in `src/data/modelDescriptions.js`. Filtered selection always displays a visible model; the overall-leader comparison is explicitly independent of filters. Charts and tables support horizontal scrolling on small screens, with exact scores available in the keyboard-accessible table.
+
 ## Structure
 
 ```text

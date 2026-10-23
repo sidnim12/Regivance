@@ -12,7 +12,7 @@ const About = lazy(() => import("./pages/About").then((module) => ({ default: mo
 export default function App() {
   return (
     <ThemeProvider><AppShell>
-      <Suspense fallback={<div className="route-loading">Loading research view…</div>}>
+      <Suspense fallback={<div className="route-loading" role="status">Loading research view…</div>}>
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="/data" element={<DataFeatures />} />

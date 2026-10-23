@@ -4,7 +4,7 @@ import { useReducedMotion } from "framer-motion";
 export function MetricChart({ data, metric }) {
   const reducedMotion = useReducedMotion();
   return (
-    <div className="chart-wrap" aria-label={`${metric.toUpperCase()} model comparison`}>
+    <div className="chart-scroll" tabIndex={0} role="region" aria-label={`${metric.toUpperCase()} model comparison; exact scores in the table below`}><div className="chart-wrap" style={{ height: Math.max(260, data.length * 44 + 60) }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} layout="vertical" margin={{ top: 8, right: 20, bottom: 8, left: 25 }}>
           <CartesianGrid stroke="var(--line)" horizontal={false} />
@@ -14,6 +14,6 @@ export function MetricChart({ data, metric }) {
           <Bar dataKey={metric} fill="var(--green)" radius={[0, 7, 7, 0]} isAnimationActive={!reducedMotion} animationDuration={700} />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </div></div>
   );
 }
